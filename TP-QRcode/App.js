@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Text, View, StyleSheet, Button, FlatList } from 'react-native';
+import { Text, View, StyleSheet, Button, FlatList, Image } from 'react-native';
 import { Camera } from 'expo-camera';
 import axios from 'axios';
 
@@ -65,13 +65,20 @@ export default function App() {
           <View style={styles.buttonContainer}>
             <Button title="Ouvrir le scan" onPress={openScanner} />
           </View>
+
           <View style={styles.userListContainer}>
+          
             <FlatList
               data={userData}
               renderItem={({ item }) => (
                 <View style={styles.userItem}>
+                  <Image
+                    style={styles.userImage}
+                    source={{ uri: item.picture.large }}
+                  />
                   <Text style={styles.userName}>{`${item.name.first} ${item.name.last}`}</Text>
                   <Text style={styles.userGender}>{item.gender}</Text>
+                  <Text style={styles.userLocation}>{`${item.location.street.number} ${item.location.street.name}`}</Text>
                   <Text style={styles.userLocation}>{`${item.location.city}, ${item.location.country}`}</Text>
                 </View>
               )}
@@ -130,5 +137,11 @@ const styles = StyleSheet.create({
   userLocation: {
     fontSize: 14,
     color: '#fff',
+  },
+  userImage: {
+    width: 50,   // or any other size you want
+    height: 50,  // or any other size you want
+    borderRadius: 25,  // this will make the image circular
+    marginBottom: 10,
   },
 });
